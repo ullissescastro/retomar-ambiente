@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Retomar Ambiente — Agente de sessão
+Comment=Registra os aplicativos elegíveis em execução
+Exec=retomar-ambiente --agent
+Terminal=false
+StartupNotify=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Retomar Ambiente
+Comment=Pergunta se o ambiente de trabalho deve ser restaurado
+Exec=retomar-ambiente --autostart
+Terminal=false
+StartupNotify=false
+X-GNOME-Autostart-enabled=true

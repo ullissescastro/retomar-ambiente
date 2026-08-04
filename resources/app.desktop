@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Retomar Ambiente
+Comment=Retome os aplicativos que estavam abertos na sessão anterior
+Type=Application
+Icon=io.github.ullissescastro.RetomarAmbiente
+Exec=retomar-ambiente --manage
+Terminal=false
+StartupNotify=true
+Categories=Utility;
+Keywords=sessão;restaurar;aplicativos;COSMIC;

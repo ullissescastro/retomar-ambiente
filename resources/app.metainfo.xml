@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.ullissescastro.RetomarAmbiente</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MPL-2.0</project_license>
+
+  <name>Retomar Ambiente</name>
+  <summary>Retome os aplicativos abertos na sessão anterior do COSMIC</summary>
+
+  <developer id="io.github.ullissescastro">
+    <name>Ullisses Castro</name>
+  </developer>
+
+  <description>
+    <p>
+      Retomar Ambiente registra os aplicativos elegíveis que permanecem
+      abertos no final da sessão e pergunta, no login seguinte, quais devem
+      ser retomados.
+    </p>
+    <p>
+      O aplicativo tenta devolver as janelas aos monitores em que estavam
+      e restaurar, em melhor esforço, os estados maximizado, minimizado
+      e tela cheia.
+    </p>
+    <p>
+      Abas, documentos e projetos continuam sendo restaurados pelos
+      próprios aplicativos.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.ullissescastro.RetomarAmbiente.desktop</launchable>
+  <icon type="stock">io.github.ullissescastro.RetomarAmbiente</icon>
+
+  <url type="homepage">https://github.com/ullissescastro/retomar-ambiente</url>
+  <url type="vcs-browser">https://github.com/ullissescastro/retomar-ambiente</url>
+  <url type="bugtracker">https://github.com/ullissescastro/retomar-ambiente/issues</url>
+
+  <provides>
+    <binary>retomar-ambiente</binary>
+  </provides>
+
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+
+  <categories>
+    <category>Utility</category>
+  </categories>
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="0.2.1" date="2026-08-04">
+      <description>
+        <p>Primeira versão pública do Retomar Ambiente.</p>
+        <ul>
+          <li>Registro dos aplicativos abertos no final da sessão.</li>
+          <li>Seleção dos aplicativos que devem ser restaurados.</li>
+          <li>Restauração de monitor e estado da janela em melhor esforço.</li>
+          <li>Gerenciamento dos aplicativos elegíveis.</li>
+          <li>Instalação local sem privilégios administrativos.</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+</component>
