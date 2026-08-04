@@ -60,6 +60,31 @@ Executar o agente manualmente para diagnóstico:
 ./target/release/retomar-ambiente --agent
 ```
 
+## Instalar o pacote binário
+
+Para computadores Linux `x86_64`, cada release oferece um pacote
+pré-compilado. Esse método não exige Rust, Cargo ou `just`.
+
+1. Baixe o arquivo `retomar-ambiente-<versão>-linux-x86_64.tar.gz` e o
+   respectivo arquivo `.sha256` na página de releases.
+2. No diretório dos downloads, valide e extraia o pacote:
+
+```bash
+sha256sum -c retomar-ambiente-*-linux-x86_64.tar.gz.sha256
+tar -xzf retomar-ambiente-*-linux-x86_64.tar.gz
+cd retomar-ambiente-*-linux-x86_64
+./install.sh
+```
+
+Para remover:
+
+```bash
+retomar-ambiente-uninstall
+```
+
+O pacote é produzido automaticamente pelo GitHub Actions em Ubuntu 24.04 e é
+destinado ao Pop!_OS com COSMIC em máquinas `x86_64`.
+
 ## Instalar para o usuário atual
 
 Para obter o código-fonte:

@@ -1,0 +1,86 @@
+name: Publicar binário Linux
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag da release que receberá o pacote"
+        required: true
+        default: "v0.2.1"
+
+permissions:
+  contents: write
+
+jobs:
+  linux-x86_64:
+    name: Linux x86_64
+    runs-on: ubuntu-24.04
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+
+    steps:
+      - name: Obter código-fonte
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.ref }}
+
+      - name: Instalar dependências de compilação
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake \
+            just \
+            libexpat1-dev \
+            libfontconfig1-dev \
+            libfreetype-dev \
+            libxkbcommon-dev \
+            pkgconf
+          rustup update stable
+          rustup default stable
+          rustc --version
+          cargo --version
+
+      - name: Validar versão
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          VERSION="${RELEASE_TAG#v}"
+          CARGO_VERSION="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n 1)"
+          if [[ "$VERSION" != "$CARGO_VERSION" ]]; then
+            echo "A tag informa $VERSION, mas o Cargo.toml informa $CARGO_VERSION." >&2
+            exit 1
+          fi
+
+      - name: Compilar
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cargo metadata --locked --no-deps --format-version 1 >/dev/null
+          cargo build --locked --release
+
+      - name: Montar pacote instalável
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          ./scripts/package-linux.sh "$RELEASE_TAG"
+
+      - name: Anexar pacote à release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" \
+              --title "Retomar Ambiente ${RELEASE_TAG#v}" \
+              --generate-notes
+          fi
+          gh release upload "$RELEASE_TAG" \
+            "dist/${PACKAGE_NAME}.tar.gz" \
+            "dist/${PACKAGE_NAME}.tar.gz.sha256" \
+            --clobber
